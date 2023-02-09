@@ -9,6 +9,8 @@ function App() {
 	const [city, setCity] = useState("");
 
 	useEffect(() => {
+		document.title = "Weather app";
+
 		navigator.geolocation.getCurrentPosition((pos) => {
 			const { latitude: lat, longitude: lon } = pos.coords;
 
