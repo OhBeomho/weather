@@ -1,4 +1,5 @@
 .weathers {
+	width: 90%;
 	display: grid;
 	grid-auto-rows: 1fr;
 	gap: 10px 20px;
