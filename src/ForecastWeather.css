@@ -1,6 +1,7 @@
 .weathers {
 	display: grid;
-	grid-auto-rows: minmax(100px, auto);
+	grid-template-columns: repeat(4, auto);
+	grid-template-rows: repeat(3, auto);
 	gap: 10px 20px;
 }
 
