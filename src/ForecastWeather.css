@@ -2,7 +2,8 @@
 	display: grid;
 	grid-template-columns: repeat(4, auto);
 	grid-template-rows: repeat(3, auto);
-	gap: 10px 20px;
+	row-gap: 20px;
+	column-gap: 10px;
 }
 
 .weathers .temp {
