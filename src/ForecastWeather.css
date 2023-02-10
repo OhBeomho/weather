@@ -1,6 +1,6 @@
 .weathers {
 	display: grid;
-	grid-auto-rows: auto;
+	grid-auto-rows: minmax(100px, auto);
 	gap: 10px 20px;
 }
 
