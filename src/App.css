@@ -12,3 +12,16 @@
 .title {
 	font-size: 40px;
 }
+
+a.button {
+	text-decoration: none;
+	padding: 4px;
+	border-radius: 4px;
+	background-color: rgb(120, 120, 120);
+	color: white;
+	transition: all 0.2s;
+}
+
+a.button:hover {
+	background-color: rgb(80, 80, 80);
+}

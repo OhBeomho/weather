@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { WeatherData, WeatherProps } from "./weather";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-function ForecastWeather(props: WeatherProps) {
+function FullForecastWeather(props: WeatherProps) {
 	const [weatherList, setWeatherList] = useState<WeatherData[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 
 	useEffect(() => {
-		fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${props.lat}&lon=${props.lon}&appid=${process.env.REACT_APP_API_KEY}&units=metric&lang=kr&cnt=5`)
+		fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${props.lat}&lon=${props.lon}&appid=${process.env.REACT_APP_API_KEY}&units=metric&lang=kr&cnt=24`)
 			.then((res) => res.json())
 			.then((data) => {
 				if (Number(data.cod) !== 200) {
@@ -42,8 +42,9 @@ function ForecastWeather(props: WeatherProps) {
 			});
 	}, []);
 
+	// TODO
 	const weatherElements = weatherList.map((data) => (
-		<div>
+		<div style={{ marginBottom: 50 }}>
 			<div style={{ color: "lightgray" }}>
 				{data.time?.toLocaleDateString("ko-KR", { month: "numeric", day: "2-digit" })}<br />
 				{data.time?.toLocaleTimeString("ko-KR", { hour: "numeric", minute: "2-digit" })}
@@ -54,32 +55,31 @@ function ForecastWeather(props: WeatherProps) {
 		</div>
 	));
 
-	return loading ? (<div>예상 날씨 정보 불러오는 중...</div>) :
-		error ? (
-			<div>
-				<h1>예상 날씨</h1><br />
-				날씨 정보를 불러올 수 없습니다.
-			</div>
-		) : (
-			<div>
-				<h1>예상 날씨</h1>
-				<WeatherList>
-					{weatherElements}
-				</WeatherList>
-				<div>
-					<Link className="button" to="/forecast">예상 날씨 더보기</Link>
-				</div>
-			</div>
-		);
+	return loading ? (
+		<div>예상 날씨 정보 불러오는 중...</div>
+	) : error ? (
+		<div>
+			<h1>예상 날씨 정보</h1>
+			날씨 정보를 불러올 수 없습니다.
+		</div>
+	) : (
+		<div>
+			<h1>예상 날씨 정보</h1>
+			<WeatherList>
+				{weatherElements}
+			</WeatherList>
+			<Link to="/" className="button">뒤로</Link>
+		</div>
+	);
 }
 
 const WeatherList = styled.div`
 	display: flex;
-	gap: 10px;
 	justify-content: center;
 	align-items: center;
+	max-width: 500px;
+	width: 90vw;
 	flex-wrap: wrap;
-	margin: 20px 0;
 `;
 
-export default ForecastWeather;
+export default FullForecastWeather;

@@ -1,17 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./CurrentWeather.css";
-
-interface CurrentWeatherProps {
-	lat: number;
-	lon: number;
-}
-
-interface WeatherData {
-	temp?: number;
-	weather?: string;
-	description?: string;
-	icon?: string;
-}
+import { WeatherProps, WeatherData } from "./weather";
+import styled from "styled-components";
 
 const initialState: WeatherData = {
 	temp: 0,
@@ -20,7 +9,7 @@ const initialState: WeatherData = {
 	icon: ""
 };
 
-function CurrentWeather(props: CurrentWeatherProps) {
+function CurrentWeather(props: WeatherProps) {
 	const [weatherData, setWeatherData] = useState(initialState);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
@@ -40,7 +29,10 @@ function CurrentWeather(props: CurrentWeatherProps) {
 
 				setWeatherData({ temp, weather, description, icon });
 				setLoading(false);
-			}).catch(() => setError(true));
+			}).catch(() => {
+				setError(true);
+				setLoading(false);
+			});
 	}, []);
 
 	return loading ? (<div>현재 날씨 정보 불러오는 중...</div>) :
@@ -52,18 +44,24 @@ function CurrentWeather(props: CurrentWeatherProps) {
 		) : (
 			<div>
 				<h1>현재 날씨</h1>
-				<div className="weather">
+				<MainWeather>
 					<div>
-						<div className="temp">{weatherData.temp}&#8451;</div>
+						<div style={{ fontSize: 35 }}>{weatherData.temp}&#8451;</div>
 					</div>
-					<img className="icon" src={`http://openweathermap.org/img/wn/${weatherData.icon}@2x.png`} alt="icon"></img>
+					<img style={{ width: 80, height: 80, marginLeft: 20 }} src={`http://openweathermap.org/img/wn/${weatherData.icon}@2x.png`} alt="icon"></img>
 					<div>
-						<div className="weather-main">{weatherData.weather}</div>
-						<div className="weather-desc">{weatherData.description}</div>
+						<div style={{ fontSize: 25 }}>{weatherData.weather}</div>
+						<div>{weatherData.description}</div>
 					</div>
-				</div>
+				</MainWeather>
 			</div>
 		);
 }
+
+const MainWeather = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
 
 export default CurrentWeather;
